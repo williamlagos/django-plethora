@@ -23,7 +23,7 @@ STATICFILES_FINDERS = (
 )
 
 TEMPLATE_LOADERS = (
-    ('jade.ext.django.Loader',(
+    ('efforia.jade.ext.django.Loader',(
     	'django.template.loaders.filesystem.Loader',
     	'django.template.loaders.app_directories.Loader',
     )),
@@ -48,10 +48,14 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap','gunicorn','south',
+    'efforia',
+    'efforia.bootstrap',
     'django.contrib.admin',
-    'paypal','pagseguro',
-    'efforia','infinite'
+    'efforia.paypal',
+    'efforia.pagseguro',
+    'efforia.infinite',
+    'gunicorn',
+    'south'
 ]
 
 LOGGING = {

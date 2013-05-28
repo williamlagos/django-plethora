@@ -1,7 +1,7 @@
 from django.conf.urls import patterns,url,include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
-from pagseguro.urls import pagseguro_urlpatterns
+from efforia.pagseguro.urls import pagseguro_urlpatterns
 admin.autodiscover()
 
 urlpatterns = patterns('',
