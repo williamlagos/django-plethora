@@ -8,6 +8,7 @@ greater than and less than operators. Some common case examples::
     {% if "ifnotequal tag" != "beautiful" %}...{% endif %}
 """
 import unittest
+import efforia.jade as jade
 from django import template
 
 register = template.Library()
@@ -29,11 +30,11 @@ class Evaluator(template.Node):
   def render(self, context):
     '''Evaluates the code in the page and returns the result'''
     modules = {
-      'jade': __import__('jade')
+      'jade': __import__('jade.runtime',globals(),locals(),['attrs'])
     }
     context['false'] = False
     context['true'] = True
-    return str(eval('jade.runtime.attrs(%s)'%self.code,modules,context))
+    return str(eval('jade.attrs(%s)'%self.code,modules,context))
 
 @register.tag(name="__jade_set")
 def do_set(parser, token):
