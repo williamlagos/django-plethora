@@ -101,11 +101,7 @@ $.fn.changeOption = function(event){
 	var next = $(this).attr('next');
 	$.get($(this).attr('href'),{},function(data){
 		$('.form').html(data);
-		$('.send')
-		.removeClass('uploadspread productspread postspread spread videospread imagespread '+ 
-					 'procfg imgcfg controlcfg placecfg socialcfg '+
-					 'projectcreate movementcreate grabcreate eventcreate')
-		.addClass(next);
+		$('.send').removeClass($.e.buttons).addClass(next);
 		$.e.uploadOpt['url'] = $('#image').attr('action');
 		$('.datepicker').datepicker($.e.datepickerOpt);
 		$('.upload,.file').fileUpload($.e.uploadOpt);
@@ -251,7 +247,7 @@ $.fn.submitPasswordChange = function(event){
 			$('#password').click(function(event){
 				event.preventDefault();
 				$.ajax({
-					url:'password',
+					url:'efforia/password',
 					type:'POST',
 					data:$('#passwordform').serialize(),
 					beforeSend:function(){

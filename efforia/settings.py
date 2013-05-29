@@ -86,3 +86,8 @@ AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 ANONYMOUS_USER_ID = -1
 AUTH_PROFILE_MODULE = 'efforia.Profile'
+
+EFFORIA_APPS = ()
+EFFORIA_OBJS = {}
+EFFORIA_NAMES = {}
+EFFORIA_TOKENS = {}

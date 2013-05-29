@@ -36,7 +36,8 @@ $.fn.listenEvents = function () {
     $('.enroll').on('click',create.showEnroll);
 }
 
-$.fn.mainLoop = function(){
+$.fn.mainLoop = function () {
+    $.e.buttons += ' projectcreate movementcreate grabcreate eventcreate ';
     $.fn.unloadEvents();
     $.fn.listenEvents();
 }

@@ -99,7 +99,7 @@ class Profiles(Efforia):
             if len(value) is 0: continue
             elif 'user' in key: 
                 user.username = value
-                self.set_cookie("user",json.dumps(value))
+                self.set_current_user(request,value)
             elif 'email' in key: user.email = value
             elif 'name' in key: user.first_name = value
             elif 'lastn' in key: user.last_name = value

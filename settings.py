@@ -16,39 +16,39 @@ DATABASES = {
   }
 }
 
-EFFORIA_APPS = ('spread','promote')
-EFFORIA_OBJS = {
-    'spread':  ['Playable','Spreadable','Image','Product'],
-    'promote': ['Project','Event']
-}
-EFFORIA_NAMES = {
-    'spread':  ('Espalhe','spread'),
-    'promote': ('Promova','promote')
-}
-EFFORIA_TOKENS = {
-    "@": "Profile", 
-    "#": "Project", 
-    "@#":"Project", 
-    "##":"Movement",
-    ">": "Playable",
-    ">!":"Playable",
-    "!": "Spreadable",
-    "!!":"Spreadable",
-    "@!":"Event",
-    "@": "Event",
-    "@@":"Event",
-    "%": "Image",
-    "%!":"Image",
-    "!#":"Page",
-    "!%":"Image",
-    "$$":"Product"
-}
+#EFFORIA_APPS = ('spread','promote')
+#EFFORIA_OBJS.update({
+#    'spread':  ['Playable','Spreadable','Image','Product'],
+#    'promote': ['Project','Event']
+#})
+#EFFORIA_NAMES.update({
+#    'spread':  ('Espalhe','spread'),
+#    'promote': ('Promova','promote')
+#})
+#EFFORIA_TOKENS.update({
+#    "@": "Profile", 
+#    "#": "Project", 
+#    "@#":"Project", 
+#    "##":"Movement",
+#    ">": "Playable",
+#    ">!":"Playable",
+#    "!": "Spreadable",
+#    "!!":"Spreadable",
+#    "@!":"Event",
+#    "@": "Event",
+#    "@@":"Event",
+#    "%": "Image",
+#    "%!":"Image",
+#    "!#":"Page",
+#    "!%":"Image",
+#    "$$":"Product"
+#})
+#INSTALLED_APPS.extend(EFFORIA_APPS)
+#STATICFILES_DIRS.extend((
+#    os.path.abspath('spread/public'),
+#    os.path.abspath('promote/public'),
+#))
 
-STATICFILES_DIRS.extend((
-    os.path.abspath('spread/public'),
-    os.path.abspath('promote/public'),
-))
-INSTALLED_APPS.extend(EFFORIA_APPS)
 
 PAYPAL_RECEIVER_EMAIL = 'caokzu@gmail.com'
 PAYPAL_NOTIFY_URL = '/paypal'

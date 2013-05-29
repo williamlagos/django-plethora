@@ -33,7 +33,8 @@ $.fn.listenEvents = function(){
 	$('.moreproducts').on('click',store.showMoreProducts);
 }
 
-$.fn.mainLoop = function(){
+$.fn.mainLoop = function () {
+    $.e.buttons += ' uploadspread productspread postspread spread videospread imagespread ';
     $.fn.unloadEvents();
     $.fn.listenEvents();
 }

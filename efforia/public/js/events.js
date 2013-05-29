@@ -39,11 +39,11 @@ $.fn.clearEvents = function(){
 	$('.pagespread').off('click');
 	$('.page').off('click');
 	$('.pagesave').off('click');
+	$('.passwordchange').off('click');
 }
 
-$.fn.eventLoop = function(){
-	$.fn.clearEvents();
-	
+$.fn.eventLoop = function () {
+    $.fn.clearEvents();
 	$('#Canvas')
 	.on('mousedown',spin.holdHelix)
 	.on('mouseup',spin.releaseHelix)
@@ -86,5 +86,11 @@ $.fn.eventLoop = function(){
 	$('.purchase').on('click',$.fn.openDeliverable);
 	$('.pagespread').on('click',$.fn.submitPage);
 	$('.page').on('click',$.fn.showPageEdit);
-	$('.pagesave').on('click',$.fn.savePage);
+	$('.pagesave').on('click', $.fn.savePage);
+	$('.passwordchange').on('click', $.fn.submitPasswordChange);
+}
+
+$.fn.mainLoop = function(){
+    $.e.buttons += ' procfg imgcfg controlcfg placecfg socialcfg ';
+    $.fn.eventLoop();
 }

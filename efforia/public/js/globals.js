@@ -39,6 +39,7 @@ $.f = {
 }
 
 $.e = {
+    buttons:'',
 	navigation:'',
 	spin:false,
 	brand:false,

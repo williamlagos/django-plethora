@@ -262,6 +262,8 @@
     <Content Include="spread\public\img\schedule.png" />
     <Content Include="efforia\public\img\progress.gif" />
     <Content Include="efforia\public\svg\interface.svg" />
+    <Content Include="spread\public\js\spreadapp.js" />
+    <Content Include="spread\public\js\spreadevents.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="efforia" />
@@ -310,6 +312,7 @@
     <Folder Include="spread\migrations" />
     <Folder Include="spread\public\" />
     <Folder Include="spread\public\img" />
+    <Folder Include="spread\public\js\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>

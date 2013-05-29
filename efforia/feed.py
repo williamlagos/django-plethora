@@ -29,6 +29,11 @@ class Mosaic:
     def class_module(self,module,mclass):
         mod = __import__(module, fromlist=[mclass])
         return getattr(mod,mclass)
+    def set_current_user(self,request,name):
+        key = request.COOKIES['sessionid']
+        s = SessionStore(key)
+        s['user'] = name
+        s.save()
     def current_user(self,request):
         key = request.COOKIES['sessionid']
         s = SessionStore(key)

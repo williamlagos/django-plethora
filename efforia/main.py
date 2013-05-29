@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponse as response
 
-from models import Profile,Page,user
+from models import Profile,Page,user,superuser
 from feed import Mosaic
 
 class Efforia(Mosaic):
@@ -22,7 +22,7 @@ class Efforia(Mosaic):
                                                 'name':'%s %s' % (u.first_name,u.last_name),'apps':apps
                                                 },content_type='text/html')
         # Pagina inicial
-        p = list(Page.objects.filter(user=user('efforia')))
+        p = list(Page.objects.filter(user=superuser()))
         return render(request,'enter.jade',{'static_url':settings.STATIC_URL,'pages':p,},content_type='text/html')
     def external(self,request):
         u = self.current_user(request)
