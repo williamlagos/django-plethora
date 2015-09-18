@@ -7,8 +7,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^$','efforia.views.main'),
     (r'^efforia/',include('efforia.urls')),
-    #(r'^promote/',include('promote.urls')),
-    #(r'^spread/',include('spread.urls')),
+#    (r'^promote/',include('promote.urls')),
+    (r'^spread/',include('spread.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

@@ -5,49 +5,57 @@ ADMINS = (('William Oliveira de Lagos', 'william@efforia.com.br'),)
 MANAGERS = ADMINS
 SECRET_KEY = 'x5dvfbk$u-(07^f1229p*_%rcuc+nka45j6awo==*jkyjiucql'
 
+#DATABASES = {
+#  'default': {
+#    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#    'NAME': 'd6i6a0klirtqjd',
+#    'HOST': 'ec2-54-243-243-176.compute-1.amazonaws.com',
+#    'PORT': 5432,
+#    'USER': 'kkoaphemdgvutt',
+#    'PASSWORD': 'ztTIw8EcIYX2UlNolrVmTb8yZQ'
+#  }
+#}
+
 DATABASES = {
   'default': {
-    'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'd6i6a0klirtqjd',
-    'HOST': 'ec2-54-243-243-176.compute-1.amazonaws.com',
-    'PORT': 5432,
-    'USER': 'kkoaphemdgvutt',
-    'PASSWORD': 'ztTIw8EcIYX2UlNolrVmTb8yZQ'
-  }
+     'ENGINE':'django.db.backends.sqlite3',
+     'NAME':'dev.db'
+   }
 }
 
 #EFFORIA_APPS = ('spread','promote')
-#EFFORIA_OBJS.update({
-#    'spread':  ['Playable','Spreadable','Image','Product'],
+EFFORIA_APPS = ('spread',)
+EFFORIA_OBJS.update({
+    'spread':  ['Playable','Spreadable','Image','Product'],
 #    'promote': ['Project','Event']
-#})
-#EFFORIA_NAMES.update({
-#    'spread':  ('Espalhe','spread'),
+})
+EFFORIA_NAMES.update({
+    'spread':  ('Espalhe','spread'),
 #    'promote': ('Promova','promote')
-#})
-#EFFORIA_TOKENS.update({
-#    "@": "Profile", 
+})
+EFFORIA_TOKENS.update({
+    "@": "Profile", 
 #    "#": "Project", 
 #    "@#":"Project", 
 #    "##":"Movement",
-#    ">": "Playable",
-#    ">!":"Playable",
-#    "!": "Spreadable",
-#    "!!":"Spreadable",
+    ">": "Playable",
+    ">!":"Playable",
+    "!": "Spreadable",
+    "!!":"Spreadable",
 #    "@!":"Event",
 #    "@": "Event",
 #    "@@":"Event",
-#    "%": "Image",
-#    "%!":"Image",
-#    "!#":"Page",
-#    "!%":"Image",
-#    "$$":"Product"
-#})
-#INSTALLED_APPS.extend(EFFORIA_APPS)
-#STATICFILES_DIRS.extend((
-#    os.path.abspath('spread/public'),
+    "%": "Image",
+    "%!":"Image",
+    "!#":"Page",
+    "!%":"Image",
+    "$$":"Product"
+})
+INSTALLED_APPS.extend(EFFORIA_APPS)
+STATICFILES_DIRS.extend((
+    os.path.abspath('spread/public'),
 #    os.path.abspath('promote/public'),
-#))
+))
 
 
 PAYPAL_RECEIVER_EMAIL = 'caokzu@gmail.com'
