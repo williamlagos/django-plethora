@@ -1,4 +1,5 @@
 Django==1.10.5
+djangorestframework
 django-flat-responsive
 django-pure-pagination
 django-dropbox
