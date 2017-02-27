@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from pagseguro.pagseguro import CarrinhoPagSeguro,ItemPagSeguro
+from django_pagseguro.pagseguro import CarrinhoPagSeguro,ItemPagSeguro
 from paypal.standard.forms import PayPalPaymentsForm
 from paypal.standard.widgets import ValueHiddenInput, ReservedValueHiddenInput
-from django.shortcuts import render 
+from django.shortcuts import render
 from django.conf import settings
 from django import forms
 from models import Sellable,Basket,user
@@ -26,14 +26,14 @@ class Baskets(Mosaic):
             s = self.sellable(user=u,name=token,value=value,sellid=prodid)
             s.save()
         exists = Basket.objects.all().filter(user=u,product=prodid)
-        if not len(exists): 
+        if not len(exists):
             basket = Basket(user=u,product=prodid)
             basket.save()
         return self.view_items(request)
     def process_cart(self,request):
         u = user(request.session['user']); cart = []
         basket = list(Basket.objects.filter(user=u))
-        for b in basket: 
+        for b in basket:
             sellables = Sellable.objects.filter(sellid=b.product)
             for s in sellables:
                 prod = {}
@@ -86,6 +86,6 @@ class PayPal(Baskets):
             form_paypal.fields['amount_1'] = forms.IntegerField(widget=ValueHiddenInput(),initial=value)
             form_paypal.fields['item_name_1'] = forms.CharField(widget=ValueHiddenInput(),initial=product)
             form_paypal.fields['quantity_1'] = forms.CharField(widget=ValueHiddenInput(),initial=str(qty))
-        form_paypal.fields['cmd'] = forms.CharField(widget=ValueHiddenInput(),initial=option)        
-        form_paypal.fields['upload'] = forms.CharField(widget=ValueHiddenInput(),initial='1')        
+        form_paypal.fields['cmd'] = forms.CharField(widget=ValueHiddenInput(),initial=option)
+        form_paypal.fields['upload'] = forms.CharField(widget=ValueHiddenInput(),initial='1')
 	return render(request,'form.jade',{'form':form_paypal.render()})

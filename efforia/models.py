@@ -21,19 +21,19 @@ class Profile(Model):
     typeditor = IntegerField(default=1)
     monetize = IntegerField(default=0)
     language = IntegerField(default=0)
-    date = DateTimeField(default=date.today(),auto_now_add=True)
+    date = DateTimeField(auto_now_add=True)
     def years_old(self): return datetime.timedelta(self.birthday,date.today)
     def token(self): return ''
     def get_username(self): return self.user.username
     def month(self): return locale[self.date.month-1]
-    
+
 class Place(Model):
     name = CharField(default="",max_length=50)
     user = ForeignKey(User,unique=True)
     code = CharField(default="",max_length=100)
     city = CharField(default="",max_length=100)
     country = CharField(default="",max_length=50)
-    date = DateTimeField(default=date.today(),auto_now_add=True)
+    date = DateTimeField(auto_now_add=True)
 
 class Followed(Model):
     followed = IntegerField(default=1)
@@ -48,7 +48,7 @@ class Page(Model):
     def token(self): return self.name[:2]
     def name_trimmed(self): return self.name[2:]
     def month(self): return locale[self.date.month-1]
-    
+
 class Basket(Model):
     name = CharField(default='++',max_length=2)
     user = ForeignKey(User,related_name='+')
@@ -67,11 +67,11 @@ class Sellable(Model):
     value = FloatField(default=1.00)
     visual = CharField(default='',max_length=150)
     sellid = IntegerField(default=1)
-    date = DateTimeField(default=date.today(),auto_now_add=True)
+    date = DateTimeField(auto_now_add=True)
     def token(self): return '$$'
     def name_trimmed(self): return self.name[2:]
     def type_object(self): return self.name[:2]
- 
+
 class Deliverable(Model):
     name = CharField(default='((',max_length=50)
     user = ForeignKey(User,related_name='+')
@@ -82,11 +82,11 @@ class Deliverable(Model):
     width = IntegerField(default=1)
     weight = IntegerField(default=10)
     value = FloatField(default=0.0)
-    date = DateTimeField(default=date.today(),auto_now_add=True)
+    date = DateTimeField(auto_now_add=True)
     def token(self): return self.name[:2]
     def name_trimmed(self): return self.name.split(';')[0][1:]
     def month(self): return locale[self.date.month-1]
-    
+
 Profile.year = property(lambda p: p.years_old())
 Profile.name = property(lambda p: p.get_username())
 User.profile = property(lambda u: Profile.objects.get_or_create(user=u)[0])

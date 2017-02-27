@@ -4,7 +4,7 @@ import json
 from xml.dom.minidom import parseString
 from main import Efforia
 
-apis = json.load(open('settings.json','r'))
+apis = json.load(open('efforia/settings.json','r'))
 google_api = apis['social']['google']
 
 class StreamService(Efforia):
@@ -28,10 +28,10 @@ class StreamService(Efforia):
                                                                        label='Entertainment')],
                                         player=None)
                                         #private=gdata.media.Private())
-        video_entry = gdata.youtube.YouTubeVideoEntry(media=media_group) 
+        video_entry = gdata.youtube.YouTubeVideoEntry(media=media_group)
         url,token = self.get_upload_token(video_entry,access_token)
         return url,token
-    
+
     def get_upload_token(self,video_entry,access_token):
         actoken = self.refresh_google_token(access_token)
         print actoken
@@ -45,6 +45,6 @@ class StreamService(Efforia):
         url = parseString(response).getElementsByTagName('url')[0].childNodes[0].data
         token = parseString(response).getElementsByTagName('token')[0].childNodes[0].data
         return url,token
-        
+
     def search_video(self,search_terms):
         pass

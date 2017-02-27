@@ -1,6 +1,11 @@
 Django==1.10.5
-django-payments
 django-flat-responsive
+django-pure-pagination
+django-dropbox
+django-pagseguro
+django-paypal
+django-ship
+django-feedly
 BeautifulSoup==3.2.1
 argparse==1.2.1
 gdata==2.0.16

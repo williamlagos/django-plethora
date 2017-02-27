@@ -17,13 +17,13 @@ class Efforia(Mosaic):
             u = user(request.session['user'])
             names = settings.EFFORIA_NAMES; apps = []
             for a in settings.EFFORIA_APPS: apps.append(names[a])
-            return render(request,'index.jade',{'static_url':settings.STATIC_URL,
+            return render(request,'index.pug',{'static_url':settings.STATIC_URL,
                                                 'user':user(request.session['user']),
                                                 'name':'%s %s' % (u.first_name,u.last_name),'apps':apps
                                                 },content_type='text/html')
         # Pagina inicial
         p = list(Page.objects.filter(user=superuser()))
-        return render(request,'enter.jade',{'static_url':settings.STATIC_URL,'pages':p,},content_type='text/html')
+        return render(request,'enter.pug',{'static_url':settings.STATIC_URL,'pages':p,},content_type='text/html')
     def external(self,request):
         u = self.current_user(request)
         sellables = Sellable.objects.filter(user=u)
@@ -95,12 +95,12 @@ class Efforia(Mosaic):
     def authenticate(self,username,password):
         exists = User.objects.filter(username=username)
         if exists:
-            if exists[0].check_password(password): 
+            if exists[0].check_password(password):
                 return exists
         else: return None
     def authenticated(self):
         name = self.get_current_user()
-        if not name: 
+        if not name:
             #self.redirect('login')
             self.render('templates/enter.html',STATIC_URL=settings.STATIC_URL)
             return False

@@ -8,10 +8,10 @@ from django.http import HttpResponseRedirect as redirect
 from django.shortcuts import render
 from paypal.standard.forms import PayPalPaymentsForm
 from paypal.standard.ipn.signals import payment_was_successful
-from paypal import fretefacil
+from shipping import fretefacil
 from datetime import datetime
 
-from correios import Correios
+from shipping.correios import CorreiosShippingService as Correios
 from efforia.models import Profile,Basket,Deliverable
 from efforia.views import *
 from app import Images
@@ -68,7 +68,7 @@ class Mail(Efforia,Correios):
         q = self.consulta(mail_code)[0]
         d = fretefacil.create_deliverable('91350-180',mail_code,'30','30','30','0.5')
         value = fretefacil.delivery_value(d)
-        formatted = '<div>Valor do frete: R$ <div style="display:inline;" class="delivery">%s</div></div>' % value 
+        formatted = '<div>Valor do frete: R$ <div style="display:inline;" class="delivery">%s</div></div>' % value
         for i in q.values(): s += '<div>%s\n</div>' % i
         s += formatted
         now,objs,rels = self.get_object_bydate(request.GET['object'],'$$')
@@ -115,7 +115,7 @@ class Deliveries(Efforia):
 
 class SpreadBasket(Basket):
     def product(self,prodid):
-	# for p in basket: 
+	# for p in basket:
         # quantity += p.quantity
         # value += p.product.credit*p.quantity
 	pass

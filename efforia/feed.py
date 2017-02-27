@@ -5,9 +5,9 @@ from django.conf import settings
 from django.http import HttpResponse as response
 from django.shortcuts import render
 from django.contrib.sessions.backends.cached_db import SessionStore
-from jade.utils import process
-from jade.ext.django import Compiler
-from infinite import Paginator,PageNotAnInteger,EmptyPage
+from pypugjs.utils import process
+from pypugjs.ext.django import Compiler
+from pure_pagination import Paginator,PageNotAnInteger,EmptyPage
 from difflib import SequenceMatcher
 
 from models import *
@@ -23,7 +23,7 @@ class Activity:
     def duplicates(self,excludes,obj): pass
 
 class Mosaic:
-    def module(self,name): 
+    def module(self,name):
         __import__(name)
         return sys.modules[name]
     def class_module(self,module,mclass):
@@ -50,7 +50,7 @@ class Mosaic:
         if objlist is None: f = self.feed(u)
         else: f = objlist
         if other is None: p = u.profile
-        else: p = other 
+        else: p = other
         f.sort(key=lambda item:item.date,reverse=True)
         p = Paginator(f,20,request=request)
         try: objects = p.page(page)
@@ -59,7 +59,7 @@ class Mosaic:
         return response(rendered,content_type='text/html')
     def apps_mosaic(self,request,feed,profile):
         apps,source = [''],''; apps.extend(settings.EFFORIA_APPS)
-        for app in apps: source += open('.%s%sgrid.jade'%(settings.STATIC_URL,app)).read()
+        for app in apps: source += open('.%s%sgrid.pug'%(settings.STATIC_URL,app)).read()
         compiled = process(src=source,compiler=Compiler)
         contexts = Context({'f':feed,'p':profile,'path':request.path,'apps':apps,'static_url':settings.STATIC_URL})
         return Template(compiled).render(contexts)
@@ -68,18 +68,18 @@ class Mosaic:
         feed = []; exclude = []; people = []
         if others is not None:
             for o in others: people.append(Profile.objects.filter(id=o)[0].user)
-        else: 
+        else:
             people.append(userobj)
-            for f in Followed.objects.filter(follower=userobj.id): 
+            for f in Followed.objects.filter(follower=userobj.id):
                 people.append(Profile.objects.filter(id=f.followed)[0].user)
         for u in people:
-            feed.append(Profile.objects.filter(user=u)[0])
+            # feed.append(Profile.objects.filter(user=u)[0])
             for a in apps:
                 m = self.module('%s.app'%a)
                 app = m.Application(u,a)
                 exclude = app.relations(feed)
                 app.duplicates(exclude,feed)
-                app.groupables(feed) 
+                app.groupables(feed)
         return feed
     def deadlines(self,request):
         u = self.current_user(request)
@@ -133,7 +133,7 @@ class Pages:
         if objlist is None: f = self.feed(u)
         else: f = objlist
         if other is None: p = u.profile
-        else: p = other 
+        else: p = other
         f.sort(key=lambda item:item.date,reverse=True)
         p = Paginator(f,20,request=request)
         try: objects = p.page(page)
@@ -151,7 +151,7 @@ class Pages:
                 app = m.Application(u,a)
                 exclude = app.relations(feed)
                 app.duplicates(exclude,feed)
-                app.groupables(feed) 
+                app.groupables(feed)
         return feed
     def deadlines(self,request):
         u = self.current_user(request)
@@ -196,4 +196,3 @@ class Pages:
         n = request.GET['title']
         c = Page.objects.filter(name=n)[0].content
         return render(request,'pageview.jade',{'content':c},content_type='text/html')
-

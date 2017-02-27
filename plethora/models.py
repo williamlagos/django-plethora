@@ -27,7 +27,7 @@ class Spreadable(Model):
     def token(self): return self.name[:1]
     def name_trimmed(self): return self.name[1:]
     def month(self): return locale[self.date.month-1]
-    
+
 class Playable(Model):
     name = CharField(default='',max_length=150)
     user = ForeignKey(User,related_name='+')
@@ -36,12 +36,12 @@ class Playable(Model):
     token = CharField(max_length=20)
     credit = IntegerField(default=0)
     visual = CharField(default='',max_length=40)
-    date = DateTimeField(default=date.today(),auto_now_add=True)
+    date = DateTimeField(auto_now_add=True)
     def etoken(self): return self.name[:1]
     def name_trimmed(self): return self.name[1:]
     def month(self): return locale[self.date.month-1]
     def date_formatted(self): return self.date.strftime('%Y-%m-%d %H:%M:%S.%f')
-    
+
 class Image(Model):
     name = CharField(default='!%',max_length=10)
     description = CharField(default='',max_length=140)
