@@ -3,7 +3,7 @@
 *~
 .DS_Store
 .settings
-efforia/settings.py
 env
+venv
 static
 dev.db

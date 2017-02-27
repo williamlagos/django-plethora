@@ -1,8 +1,8 @@
+Django==1.10.5
+django-payments
+django-flat-responsive
 BeautifulSoup==3.2.1
-Django==1.5.1
-South==0.7.3
 argparse==1.2.1
-django-pagseguro==1.4.2
 gdata==2.0.16
 gunicorn==0.13.4
 httplib2==0.9.1
