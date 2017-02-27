@@ -18,16 +18,16 @@ def pl(x): return '>!' in x[1]
 def im(x): return '%!' in x[1]
 
 class Application(Activity):
-    def __init__(self,user,app): 
+    def __init__(self,user,app):
         Activity.__init__(self,user,app)
     def deadline(self):
         playables = Playable.objects.filter(user=self.user)
         for play in playables:
-            if not play.token and not play.visual: play.delete() 
+            if not play.token and not play.visual: play.delete()
     def relations(self,feed):
         excludes = []; rels = Spreaded.objects.filter(user=self.user)
         excludes.extend([(r.spreaded,'!!') for r in rels])
-        excludes.extend([(r.spread,r.token()) for r in rels]) 
+        excludes.extend([(r.spread,r.token()) for r in rels])
         for v in rels.values('spread').distinct():
             t = rels.filter(spread=v['spread'],user=self.user)
             if len(t) > 0: feed.append(t[len(t)-1])
@@ -40,11 +40,11 @@ class Application(Activity):
             elif 'Image' in o: e = filter(im,exclude)
             excludes = [x[0] for x in e]
             feed.extend(objects.exclude(id__in=excludes))
-        
+
 class Images(Efforia):
     def __init__(self): pass
     def view_image(self,request):
-        return render(request,'image.jade',{'static_url':settings.STATIC_URL},content_type='text/html')
+        return render(request,'image.pug',{'static_url':settings.STATIC_URL},content_type='text/html')
     def upload_image(self,request):
         photo = request.FILES['Filedata'].read()
         dropbox = Dropbox()
@@ -67,9 +67,9 @@ class Images(Efforia):
 class Spreads(Efforia):
     def __init__(self): pass
     def start_spreadapp(self,request):
-        return render(request,'spreadapp.jade',{'static_url':settings.STATIC_URL},content_type='text/html')
+        return render(request,'spreadapp.pug',{'static_url':settings.STATIC_URL},content_type='text/html')
     def view_spread(self,request):
-        return render(request,"spread.jade",{},content_type='text/html')
+        return render(request,"spread.pug",{},content_type='text/html')
     def create_spread(self,request):
         u = self.current_user(request)
         name = u.first_name.lower()
@@ -78,11 +78,11 @@ class Spreads(Efforia):
         post.save()
         self.accumulate_points(1,request)
         return response('Spreadable created successfully')
-    
+
 class Uploads(Efforia):
     def __init__(self): pass
     def view_upload(self,request):
-        return render(request,'content.jade',{'static_url':settings.STATIC_URL},content_type='text/html')
+        return render(request,'content.pug',{'static_url':settings.STATIC_URL},content_type='text/html')
     def set_thumbnail(self,request):
         u = self.current_user(request)
         service = StreamService()
@@ -100,17 +100,17 @@ class Uploads(Efforia):
     def view_content(self,request):
         u = self.current_user(request)
         content = title = ''
-        for k,v in request.REQUEST.iteritems(): 
+        for k,v in request.REQUEST.iteritems():
             if 'title' in k: title = v
             elif 'content' in k: content = v
-            elif 'status' in k: 
+            elif 'status' in k:
                 return self.set_thumbnail(request)
-        try: 
+        try:
             url,token = self.parse_upload(request,title,content)
-            return render(request,'video.jade',{'static_url':settings.STATIC_URL,
+            return render(request,'video.pug',{'static_url':settings.STATIC_URL,
                                                   'hostname':request.get_host(),
                                                   'url':url,'token':token},content_type='text/html')
-        except Exception: return response('Invalid file for uploading') 
+        except Exception: return response('Invalid file for uploading')
     def parse_upload(self,request,title,content):
         keys = ','; keywords = content.split(' ')
         for k in keywords: k = normalize('NFKD',k.decode('utf-8')).encode('ASCII','ignore')
@@ -121,4 +121,4 @@ class Uploads(Efforia):
         access_token = self.current_user(request).profile.google_token
         return service.video_entry(title,content,keys,access_token)
     def media_chooser(self,request):
-        return render(request,'chooser.jade')
+        return render(request,'chooser.pug')

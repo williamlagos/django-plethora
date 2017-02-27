@@ -12,14 +12,14 @@ from main import Efforia
 class Control(Efforia):
     def __init__(self): pass
     def view_panel(self,request):
-        return render(request,'configapp.jade',{'static_url':settings.STATIC_URL},content_type='text/html')
+        return render(request,'configapp.pug',{'static_url':settings.STATIC_URL},content_type='text/html')
     def view_integrations(self,request):
-        return render(request,'integrations.jade',{'session':request.COOKIES['sessionid'],
+        return render(request,'integrations.pug',{'session':request.COOKIES['sessionid'],
                                                    'hostname':request.get_host(),
                                                    'static_url':settings.STATIC_URL},content_type='text/html')
     def view_control(self,request):
         p = Profile.objects.filter(user=self.current_user(request))[0]
-        return render(request,'appearance.jade',{
+        return render(request,'appearance.pug',{
                                                  'static_url':settings.STATIC_URL,
                                                  'interface':p.interface,
                                                  'typeditor':p.typeditor,
@@ -55,7 +55,7 @@ class Control(Efforia):
 class Photos(Efforia):
     def __init__(self): pass
     def view_photo(self,request):
-        return render(request,'photo.jade',{'static_url':settings.STATIC_URL},content_type='text/html')
+        return render(request,'photo.pug',{'static_url':settings.STATIC_URL},content_type='text/html')
     def change_photo(self,request):
         p = Profile.objects.filter(user=self.current_user(request))[0]
         photo = request.FILES['Filedata'].read()
@@ -70,13 +70,13 @@ class Photos(Efforia):
 class Passwords(Efforia):
     def __init__(self): pass
     def view_password(self,request):
-        return render(request,'password.jade',{'password':''},content_type='text/html')
+        return render(request,'password.pug',{'password':''},content_type='text/html')
     def change_password(self,request):
         user = self.current_user(request)
         old = request.POST['old_password']
         new1 = request.POST['new_password1']
         new2 = request.POST['new_password2']
-        if not user.check_password(old): 
+        if not user.check_password(old):
             return response('Senha incorreta.')
         user.set_password(new1)
         user.save()
@@ -86,7 +86,7 @@ class Profiles(Efforia):
     def __init__(self): pass
     def view_profile(self,request):
         user = self.current_user(request)
-        return render(request,'profile.jade',{
+        return render(request,'profile.pug',{
                                                 'static_url':settings.STATIC_URL,
                                                 'profile':user.profile,
                                                 'name':user.first_name.encode('utf-8'),
@@ -97,13 +97,13 @@ class Profiles(Efforia):
         user = self.current_user(request)
         for key,value in request.POST.items():
             if len(value) is 0: continue
-            elif 'user' in key: 
+            elif 'user' in key:
                 user.username = value
                 self.set_current_user(request,value)
             elif 'email' in key: user.email = value
             elif 'name' in key: user.first_name = value
             elif 'lastn' in key: user.last_name = value
-            elif 'birth' in key: 
+            elif 'birth' in key:
                 strp_time = time.strptime(value,"%d/%m/%Y")
                 profile = self.current_user(request).profile
                 profile.birthday = datetime.fromtimestamp(time.mktime(strp_time))
@@ -117,7 +117,7 @@ class Profiles(Efforia):
         f = Followed.objects.filter(followed=u.id,follower=current.id)
         if u.id == current.id: nothimself = False
         if len(f) > 0: followed = True
-        return render(request,'profileview.jade',{'profile':u.profile,
+        return render(request,'profileview.pug',{'profile':u.profile,
                                                   'nothimself':nothimself,
                                                   'followed':followed},content_type='text/html')
     def view_activity(self,request):
@@ -130,7 +130,7 @@ class Places(Efforia):
     def register_place(self,request):
         u = self.current_user(request)
         exists = len(Place.objects.filter(user=u))
-        return render(request,'place.jade',{'exists':exists,'user':u},content_type='text/html')
+        return render(request,'place.pug',{'exists':exists,'user':u},content_type='text/html')
     def create_place(self,request):
         u = self.current_user(request)
         country = city = code = ''
@@ -139,7 +139,7 @@ class Places(Efforia):
             elif 'city' in k: city = v
             elif 'code' in k: code = v.replace('-','').replace(' ','')
         place = Place.objects.filter(user=u)
-        if len(place): 
+        if len(place):
             p = place[0]
             p.country = country
             p.city = city
@@ -147,5 +147,5 @@ class Places(Efforia):
             p.save()
         else:
             p = Place(user=u,country=country,city=city,code=code)
-            p.save() 
+            p.save()
         return response('Place created/updated sucessfully')

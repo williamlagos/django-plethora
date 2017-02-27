@@ -94,7 +94,7 @@ class Mosaic:
 class Pages:
     def __init__(self): pass
     def view_page(self,request):
-        return render(request,'page.jade',{},content_type='text/html')
+        return render(request,'page.pug',{},content_type='text/html')
     def create_page(self,request):
         print request.POST
         c = request.POST['content']
@@ -102,11 +102,11 @@ class Pages:
         u = self.current_user(request)
         p = Page(content=c,user=u,name='!#%s' % t)
         p.save()
-        return render(request,'pageview.jade',{'content':c},content_type='text/html')
+        return render(request,'pageview.pug',{'content':c},content_type='text/html')
     def edit_page(self,request):
         page_id = int(request.GET['id'])
         p = Page.objects.filter(id=page_id)[0]
-        return render(request,'pagedit.jade',{
+        return render(request,'pagedit.pug',{
                        'title':p.name,
                        'content':p.content.encode('utf-8'),
                        'pageid':page_id},content_type='text/html')
@@ -123,7 +123,7 @@ class Pages:
     def page_view(self,request):
         n = request.GET['title']
         c = Page.objects.filter(name=n)[0].content
-        return render(request,'pageview.jade',{'content':c},content_type='text/html')
+        return render(request,'pageview.pug',{'content':c},content_type='text/html')
 
     def view_mosaic(self,request,objlist=None,other=None):
         if 'user' in request.session: u = user(request.session['user'])
@@ -139,7 +139,7 @@ class Pages:
         try: objects = p.page(page)
         except EmptyPage: return response('End of feed')
         apps = settings.EFFORIA_APPS
-        return render(request,'grid.jade',{'f':objects,'p':p,'path':request.path,'apps':apps,
+        return render(request,'grid.pug',{'f':objects,'p':p,'path':request.path,'apps':apps,
                                            'static_url':settings.STATIC_URL},content_type='text/html')
     def feed(self,userobj):
         apps = settings.EFFORIA_APPS
@@ -166,7 +166,7 @@ class Pages:
 class Pages:
     def __init__(self): pass
     def view_page(self,request):
-        return render(request,'page.jade',{},content_type='text/html')
+        return render(request,'page.pug',{},content_type='text/html')
     def create_page(self,request):
         print request.POST
         c = request.POST['content']
@@ -174,11 +174,11 @@ class Pages:
         u = self.current_user(request)
         p = Page(content=c,user=u,name='!#%s' % t)
         p.save()
-        return render(request,'pageview.jade',{'content':c},content_type='text/html')
+        return render(request,'pageview.pug',{'content':c},content_type='text/html')
     def edit_page(self,request):
         page_id = int(request.GET['id'])
         p = Page.objects.filter(id=page_id)[0]
-        return render(request,'pagedit.jade',{
+        return render(request,'pagedit.pug',{
                        'title':p.name,
                        'content':p.content.encode('utf-8'),
                        'pageid':page_id},content_type='text/html')
@@ -195,4 +195,4 @@ class Pages:
     def page_view(self,request):
         n = request.GET['title']
         c = Page.objects.filter(name=n)[0].content
-        return render(request,'pageview.jade',{'content':c},content_type='text/html')
+        return render(request,'pageview.pug',{'content':c},content_type='text/html')

@@ -23,9 +23,7 @@ STATICFILES_FINDERS = (
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.abspath('static'),
-        ],
+        'DIRS': [ 'efforia/public', 'plethora/public' ],
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',

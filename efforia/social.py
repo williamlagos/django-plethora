@@ -22,8 +22,8 @@ class Search(Efforia):
         u = self.current_user(request)
         others = [x['id'] for x in Profile.objects.values('id')]
         objects = self.feed(u,others)
-        filter(lambda obj: query.lower() in obj.name.lower(),objects)  
-        return self.view_mosaic(request,objects) 
+        filter(lambda obj: query.lower() in obj.name.lower(),objects)
+        return self.view_mosaic(request,objects)
 
 class Follows(Efforia):
     def __init__(self): pass
@@ -65,7 +65,7 @@ class ID(Efforia):
         p = Profile.objects.all().filter(user=u)[0]
         p.first_time = False
         p.save()
-        return response('Tutorial finalizado.')        
+        return response('Tutorial finalizado.')
 
 class Deletes(Efforia):
     def delete_element(self,request):
@@ -79,14 +79,14 @@ class Deletes(Efforia):
         query = o.objects.filter(id=oid)
         if len(query): query[0].delete()
         return response('Object deleted successfully')
-    
+
 class Tutorial(Efforia):
     def view_tutorial(self,request):
         username = full_name = ''; social = False
-        if 'social' in request.GET: 
+        if 'social' in request.GET:
             social = True; username = request.COOKIES['username']
             full_name = User.objects.filter(username=username)[0].get_full_name()
-        return render(request,'tutorial.jade',{'static_url':settings.STATIC_URL,'social':social,'username':username,'fullname':full_name})
+        return render(request,'tutorial.pug',{'static_url':settings.STATIC_URL,'social':social,'username':username,'fullname':full_name})
     def create_profile(self,request,url,user):
         birthday = career = bio = ''
         for k,v in request.POST.iteritems():
@@ -102,20 +102,21 @@ class Tutorial(Efforia):
         name = request.COOKIES['username']
         u = User.objects.filter(username=name)[0]
         if len(data['usern']) > 0: u.username = name = data['usern']
-        if len(data['passw']) > 0: 
+        if len(data['passw']) > 0:
             password = data['passw']
             u.set_password(password)
-        if len(data['name']) > 0: 
-            lname = data['name'].split() 
+        if len(data['name']) > 0:
+            lname = data['name'].split()
             u.first_name,u.last_name = lname[0],whitespace.join(lname[1:])
         u.save()
         url = 'enter?username=%s&password=%s' % (name,password)
         if len(request.POST) is 0: return redirect(url)
         else: return self.create_profile(request,url,u)
-    
-class Authentication(Efforia):              
+
+class Authentication(Efforia):
     def authenticate(self,request):
-        data = request.REQUEST
+        print request.GET
+        data = request.GET
         if 'profile' in data:
             profile = self.json_decode(data['profile'])
             typesoc = data['social']
@@ -123,10 +124,10 @@ class Authentication(Efforia):
             if 'user' in request.session:
                 u = self.current_user(request)
                 p = Profile.objects.filter(user=u)[0]
-                if 'google' in typesoc: p.google_token = profile['google_token'] 
+                if 'google' in typesoc: p.google_token = profile['google_token']
                 elif 'twitter' in typesoc: p.twitter_token = '%s;%s' % (profile['key'],profile['secret'])
                 elif 'facebook' in typesoc: p.facebook_token = profile['facebook_token']
-                p.save()       
+                p.save()
                 return redirect('/')
             # Registro do perfil com token social
             else:
@@ -157,8 +158,7 @@ class Authentication(Efforia):
                 return r
                 #return response(json.dumps(profile),mimetype='application/json')
         elif 'username' not in data or 'password' not in data:
-            return response(json.dumps({'error':'User or password missing'}),
-                            mimetype = 'application/json')
+            return response(json.dumps({'error':'User or password missing'}))
         else:
             username = data['username']
             password = data['password']
@@ -167,16 +167,15 @@ class Authentication(Efforia):
                 if exists[0].check_password(password):
                     obj = json.dumps({'username':username,'userid':exists[0].id})
                     request.session['user'] = username
-                    return response(json.dumps({'success':'Login successful'}),
-                                    mimetype = 'application/json')
+                    return response(json.dumps({'success':'Login successful'}))
                 else:
                     obj = json.dumps({'error':'User or password wrong'})
-                    return response(obj,mimetype='application/json')
+                    return response(obj)
     def leave(self,request):
         del request.session['user']
-        return response(json.dumps({'success':'Logout successful'}),mimetype='application/json')
+        return response(json.dumps({'success':'Logout successful'}))
     def view_register(self,request):
-        return render(request,'register.jade',{'static_url':settings.STATIC_URL,'hostname':request.get_host()},content_type='text/html')
+        return render(request,'register.pug',{'static_url':settings.STATIC_URL,'hostname':request.get_host()},content_type='text/html')
     def participate(self,request):
         whitespace = ' '
         username = password = first_name = last_name = ''
@@ -199,7 +198,7 @@ class Authentication(Efforia):
 class Twitter(Efforia):
     def update_status(self,request):
         u = self.current_user(request)
-        if len(request.GET['content']) > 137: 
+        if len(request.GET['content']) > 137:
             short = unicode('%s...' % (request.GET['content'][:137]))
         else: short = unicode('%s' % (request.GET['content']))
         tokens = u.profile.twitter_token
@@ -214,15 +213,15 @@ class Facebook(Efforia):
         token = u.profile.facebook_token
         text = unicode('%s' % request.GET['content'])
         data = {'message':text.encode('utf-8')}
-        if 'id' in request.REQUEST: url = '/%s/feed' % request.REQUEST['id']
+        if 'id' in request.GET: url = '/%s/feed' % request.GET['id']
         else: url = '/me/feed'
         self.oauth_post_request(url,token,data,'facebook')
         return response('Published posting successfully on Facebook')
     def send_event(self,request):
         u = self.current_user(request)
         token = u.profile.facebook_token
-        name = dates = descr = local = '' 
-        for k,v in request.REQUEST.iteritems():
+        name = dates = descr = local = ''
+        for k,v in request.GET.iteritems():
             if 'name' in k: name = v
             elif 'deadline' in k: dates = v
             elif 'description' in k: descr = v.encode('utf-8')
@@ -235,15 +234,15 @@ class Facebook(Efforia):
     def send_event_cover(self,request):
         u = self.current_user(request)
         token = u.profile.facebook_token
-        ident = request.REQUEST['id']
-        photo = request.REQUEST['url']
+        ident = request.POST['id']
+        photo = request.POST['url']
         self.oauth_post_request('/%s'%ident,token,{'cover_url':photo},'facebook')
         return response('Published image cover on event successfully on Facebook')
 
 class Coins(Efforia):
     def discharge(self,request):
-        userid = request.REQUEST['userid']
-        values = request.REQUEST['value']
+        userid = request.GET['userid']
+        values = request.GET['value']
         u = Profile.objects.filter(user=(userid))[0]
         u.credit -= int(values)
         u.save()
@@ -251,10 +250,10 @@ class Coins(Efforia):
             'userid':userid,
             'value':u.credit
         }})
-        return response(j,mimetype='application/json')
+        return response(j)
     def recharge(self,request):
-        userid = request.REQUEST['userid']
-        values = request.REQUEST['value']
+        userid = request.GET['userid']
+        values = request.GET['value']
         u = Profile.objects.filter(user=(userid))[0]
         u.credit += int(values)
         u.save()
@@ -262,11 +261,11 @@ class Coins(Efforia):
             'userid': userid,
             'value': u.credit
         }})
-        return response(j,mimetype='application/json')
+        return response(j)
     def balance(self,request):
         userid = request.GET['userid']
         json.dumps({'objects':{
             'userid': userid,
             'value': Profile.objects.filter(user=int(userid))[0].credit
         }})
-        return response(j,mimetype='application/json')
+        return response(j)

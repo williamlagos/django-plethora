@@ -9,17 +9,17 @@ class Spreadables(Efforia):
     def view_spreadable(self,request):
         spread_id = int(request.GET['id'])
         s = Spreadable.objects.filter(id=spread_id)[0]
-        return render(request,'spreadview.jade',{'content':s.content,'spreadid':spread_id},content_type='text/html')
+        return render(request,'spreadview.pug',{'content':s.content,'spreadid':spread_id},content_type='text/html')
     def view_playable(self,request):
         playable_id = int(request.GET['id'])
         e = Playable.objects.filter(id=playable_id)[0]
-        return render(request,'videoview.jade',{'playableid':playable_id},content_type='text/html')
+        return render(request,'videoview.pug',{'playableid':playable_id},content_type='text/html')
     def view_images(self,request):
         image_id = int(request.GET['id'])
         i = Image.objects.filter(id=image_id)[0]
-        return render(request,'imageview.jade',{'description':i.description,'image':i.link,'imageid':image_id},content_type='text/html')
+        return render(request,'imageview.pug',{'description':i.description,'image':i.link,'imageid':image_id},content_type='text/html')
     def spreadspread(self,request):
-        return render(request,'spread.jade',{'id':request.GET['id']},content_type='text/html')
+        return render(request,'spread.pug',{'id':request.GET['id']},content_type='text/html')
     def spreadobject(self,request):
         u = self.current_user(request)
         c = request.POST['content']

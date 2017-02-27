@@ -43,7 +43,7 @@ class Payments(Efforia):
         }
         payments = PayPalPaymentsForm(initial=paypal_dict)
         form = CreditForm()
-        return render(request,"recharge.jade",{'form':payments,'credit':form},content_type='text/html')
+        return render(request,"recharge.pug",{'form':payments,'credit':form},content_type='text/html')
     def update_credit(self,request):
         value = int(request.POST['credit'][0])
         current_profile = Profile.objects.all().filter(user=self.current_user(request))[0]
@@ -103,7 +103,7 @@ class Deliveries(Efforia):
         payments = PayPalPaymentsForm(initial=paypal_dict)
         diff = credit-u.profile.credit
         if diff < 0: diff = 0
-        return render(request,"delivery.jade",{
+        return render(request,"delivery.pug",{
                                                'payments':payments,
                                                'credit':diff,
                                                'form':form
@@ -133,9 +133,9 @@ class Store(Efforia):
         elif 'product' in request.GET:
             id = int(request.REQUEST['product'])
             prod = Product.objects.all().filter(id=id)[0]
-            return render(request,'productview.jade',{'product':prod})
+            return render(request,'productview.pug',{'product':prod})
         else:
-            return render(request,'product.jade',{'static_url':settings.STATIC_URL},content_type='text/html')
+            return render(request,'product.pug',{'static_url':settings.STATIC_URL},content_type='text/html')
     def create_product(self,request):
         u = self.current_user(request)
         e = json.load(open('%s/json/elements.json'%settings.STATIC_ROOT))
@@ -149,7 +149,7 @@ class Store(Efforia):
         product.save()
         return redirect('productimage')
     def view_image(self,request):
-        return render(request,'upload.jade',{'static_url':settings.STATIC_URL})
+        return render(request,'upload.pug',{'static_url':settings.STATIC_URL})
     def create_image(self,request):
         images = Images()
         u = self.current_user(request)

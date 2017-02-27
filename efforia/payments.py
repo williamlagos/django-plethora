@@ -19,10 +19,10 @@ class Baskets(Mosaic):
         return self.view_mosaic(request,products)
     def add_item(self,request):
         u = self.current_user(request)
-        prodid = int(request.REQUEST['id'])
-        if 'value' in request.REQUEST:
-            value = request.REQUEST['value']
-            token = request.REQUEST['token']
+        prodid = int(request.POST['id'])
+        if 'value' in request.POST:
+            value = request.POST['value']
+            token = request.POST['token']
             s = self.sellable(user=u,name=token,value=value,sellid=prodid)
             s.save()
         exists = Basket.objects.all().filter(user=u,product=prodid)
@@ -47,7 +47,7 @@ class Baskets(Mosaic):
 
 class PagSeguro(Baskets):
     def process(self,request,cart=None):
-    	for k,v in request.REQUEST.iteritems():
+    	for k,v in request.POST.iteritems():
 	    if 'product' in k: product = v
 	    elif 'value' in k: value = float(v)
 	    elif 'qty' in k: qty = int(v)
@@ -59,11 +59,11 @@ class PagSeguro(Baskets):
         else:
             carrinho.add_item(ItemPagSeguro(cod=1,descr=product,quant=qty,valor=value))
         form_pagseguro = carrinho.form()
-        return render(request,'form.jade',{'form':form_pagseguro})
+        return render(request,'form.pug',{'form':form_pagseguro})
 
 class PayPal(Baskets):
     def process(self,request,cart=None):
-    	for k,v in request.REQUEST.iteritems():
+    	for k,v in request.POST.iteritems():
 	    if 'product' in k: product = v
 	    elif 'value' in k: value = float(v)
 	    elif 'qty' in k: qty = int(v)
@@ -88,4 +88,4 @@ class PayPal(Baskets):
             form_paypal.fields['quantity_1'] = forms.CharField(widget=ValueHiddenInput(),initial=str(qty))
         form_paypal.fields['cmd'] = forms.CharField(widget=ValueHiddenInput(),initial=option)
         form_paypal.fields['upload'] = forms.CharField(widget=ValueHiddenInput(),initial='1')
-	return render(request,'form.jade',{'form':form_paypal.render()})
+	return render(request,'form.pug',{'form':form_paypal.render()})
