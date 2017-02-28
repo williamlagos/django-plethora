@@ -23,7 +23,7 @@ class Efforia(Mosaic):
                                                 },content_type='text/html')
         # Pagina inicial
         p = list(Page.objects.filter(user=superuser()))
-        return render(request,'enter.pug',{'static_url':settings.STATIC_URL,'pages':p,},content_type='text/html')
+        return render(request,'index.html',{'static_url':settings.STATIC_URL,'pages':p,},content_type='text/html')
     def external(self,request):
         u = self.current_user(request)
         sellables = Sellable.objects.filter(user=u)

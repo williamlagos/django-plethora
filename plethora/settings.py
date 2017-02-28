@@ -14,7 +14,7 @@ MEDIA_URL = ''
 
 STATIC_ROOT = os.path.abspath('static')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.abspath('efforia/public'),]
+STATICFILES_DIRS = [os.path.abspath('plethora/public'),]
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -23,7 +23,7 @@ STATICFILES_FINDERS = (
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ 'efforia/public', 'plethora/public' ],
+        'DIRS': [ 'plethora/public' ],
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -49,8 +49,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'urls'
-WSGI_APPLICATION = 'efforia.wsgi.application'
+ROOT_URLCONF = 'plethora.urls'
+WSGI_APPLICATION = 'plethora.wsgi.application'
 
 INSTALLED_APPS = [
     'flat_responsive',

@@ -2,23 +2,23 @@
 
 @font-face {
     font-family: "Ubuntu";
-    src: url('../font/ubuntu.ttf');
+    src: url('../fonts/ubuntu.ttf');
 }
 @font-face {
     font-family: "Ubuntu";
-    src: url('../font/ubuntu-bold.ttf');
+    src: url('../fonts/ubuntu-bold.ttf');
     font-weight: bold;
 }
 
 * { font-family:"Ubuntu"; }
 input, button, select, textarea { font-family:"Ubuntu"; }
-body { margin:0; padding:0; color:white; background: url('../img/tile.png'); }
+body { margin:0; padding:0; color:black; background: url('../img/tile.png'); }
 table { color:black; }
 form { text-align:center; }
 button,a,a:hover { outline:none; text-decoration:none; color:black; }
-h1 { font-size: 2.2em; text-align:center; color:black; }
-h2 { font-size: 1.4em; text-align:center; color:black; }
-h3 { font-size: 1.0em; color:black; }
+h1 { font-size: 2.2em; text-align:center; }
+h2 { font-size: 1.4em; text-align:center; }
+h3 { font-size: 1.0em; }
 select,input,textarea { width:95%; resize:none; }
 progress::-webkit-progress-bar { background: red; }
 progress::-webkit-progress-value { background: white; }
@@ -62,14 +62,14 @@ input[readonly] {
 .comment { padding:10px; border-radius:10px 10px 0px 0px; margin-bottom:-10px; }
 .player-height { max-height:360px; }
 .btn-black,.btn-black:hover {
-	margin-top:5px; 
-	background-color:black; 
+	margin-top:5px;
+	background-color:black;
 	background-image:none;
 	color:white;
 	text-shadow:none;
 }
 .menu-green,.menu-green:hover {
-	background-color:#00A946; 
+	background-color:#00A946;
 	background-image:none;
 	color:white;
 	text-shadow:none;
@@ -107,13 +107,13 @@ input[readonly] {
 	padding: 7px 9px;
 }
 
-.FixoCentral { 
+.FixoCentral {
 	position:fixed; text-align:center;
 	-webkit-transition:all 1.0s ease-in-out;
 	-moz-transition:all 1.0s ease-in-out;
 	-o-transition:all 1.0s ease-in-out;
-	-ms-transition:all 1.0s ease-in-out;	
-	transition:all 1.0s ease-in-out; 
+	-ms-transition:all 1.0s ease-in-out;
+	transition:all 1.0s ease-in-out;
 }
 
 #Container{
@@ -123,7 +123,7 @@ input[readonly] {
 
 #Progresso{
 	margin-top:auto;
-	background:black; 
+	background:black;
 }
 
 #Grade{
@@ -133,7 +133,7 @@ input[readonly] {
 	-webkit-transition:all 1.0s ease-in-out;
 	-moz-transition:all 1.0s ease-in-out;
 	-o-transition:all 1.0s ease-in-out;
-	-ms-transition:all 1.0s ease-in-out;	
+	-ms-transition:all 1.0s ease-in-out;
 	transition:all 1.0s ease-in-out;
 }
 
@@ -142,12 +142,12 @@ input[readonly] {
 	bottom:0px;
 }
 
-#Canvas.FixoCentral { 
+#Canvas.FixoCentral {
 	width:100%; top:40px; z-index:2;
 	-webkit-transition:all 1.0s ease-in-out;
 	-moz-transition:all 1.0s ease-in-out;
 	-o-transition:all 1.0s ease-in-out;
-	-ms-transition:all 1.0s ease-in-out;	
+	-ms-transition:all 1.0s ease-in-out;
 	transition:all 1.0s ease-in-out;
 }
 
@@ -155,23 +155,23 @@ input[readonly] {
 
 #Central{
 	position:fixed;
-	height:90%; 
+	height:90%;
 	margin-top:40px;
-	margin-bottom:5%; 
+	margin-bottom:5%;
 	width:100%; text-align:center;
 	-webkit-transition:all 1.0s ease-in-out;
 	-moz-transition:all 1.0s ease-in-out;
 	-o-transition:all 1.0s ease-in-out;
-	-ms-transition:all 1.0s ease-in-out;	
-	transition:all 1.0s ease-in-out; 
+	-ms-transition:all 1.0s ease-in-out;
+	transition:all 1.0s ease-in-out;
 }
 
 #efforia{
 	-webkit-transition:all 1.0s ease-in-out;
 	-moz-transition:all 1.0s ease-in-out;
 	-o-transition:all 1.0s ease-in-out;
-	-ms-transition:all 1.0s ease-in-out;	
-	transition:all 1.0s ease-in-out; 
+	-ms-transition:all 1.0s ease-in-out;
+	transition:all 1.0s ease-in-out;
 }
 
 /* Estilizacao para o grid/mosaico do Efforia */
