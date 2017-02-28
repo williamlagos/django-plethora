@@ -12,12 +12,12 @@ from shipping import fretefacil
 from datetime import datetime
 
 from shipping.correios import CorreiosShippingService as Correios
-from efforia.models import Profile,Basket,Deliverable
-from efforia.views import *
-from app import Images
-from models import Product
+from shipping.models import Deliverable
+from feedly.models import Profile,Basket
+from plethora.app import Images,Plethora
+from plethora.models import Product
 
-class Cancel(Efforia):
+class Cancel(Plethora):
     def __init__(self): pass
     def cancel(self,request):
         u = self.current_user(request)
@@ -27,13 +27,13 @@ class Cancel(Efforia):
         #self.current_user().profile.credit -= value
         #self.current_user().profile.save()
 
-class Payments(Efforia):
+class Payments(Plethora):
     def __init__(self): pass
     def view_recharge(self,request):
         paypal_dict = {
             "business": settings.PAYPAL_RECEIVER_EMAIL,
             "amount": "1.19",
-            "item_name": "Créditos do Efforia",
+            "item_name": "Créditos do Plethora",
             "invoice": "unique-invoice-id",
             "notify_url": "http://www.efforia.com.br/paypal",
             "return_url": "http://www.efforia.com.br/",
@@ -60,7 +60,7 @@ class Payments(Efforia):
             self.accumulate_points(1,request)
             return response('')
 
-class Mail(Efforia,Correios):
+class Mail(Plethora,Correios):
     def __init__(self): pass
     def postal_code(self,request):
         u = self.current_user(request)
@@ -78,7 +78,7 @@ class Mail(Efforia,Correios):
         deliverable.save()
         return response(s)
 
-class Deliveries(Efforia):
+class Deliveries(Plethora):
     def __init__(self): pass
     def view_package(self,request):
         u = self.current_user(request)
@@ -92,7 +92,7 @@ class Deliveries(Efforia):
         paypal_dict = {
             "business": settings.PAYPAL_RECEIVER_EMAIL,
             "amount": "1.00",
-            "item_name": "Produto do Efforia",
+            "item_name": "Produto do Plethora",
             "invoice": "unique-invoice-id",
             "notify_url": "http://www.efforia.com.br/paypal",
             "return_url": "http://www.efforia.com.br/delivery",
@@ -120,7 +120,7 @@ class SpreadBasket(Basket):
         # value += p.product.credit*p.quantity
 	pass
 
-class Store(Efforia):
+class Store(Plethora):
     def __init__(self): pass
     def view_product(self,request):
         u = self.current_user(request)

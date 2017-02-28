@@ -1,6 +1,6 @@
 from django.db.models import ForeignKey,TextField,CharField,IntegerField,DateTimeField,BooleanField,Model,FloatField
 from django.contrib.auth.models import User
-from efforia.models import Sellable
+from feedly.models import Sellable
 from datetime import date
 import sys,os
 path = os.path.abspath("efforia")

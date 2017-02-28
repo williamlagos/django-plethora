@@ -4,7 +4,13 @@ from app import Images,Spreads,Uploads
 from content import Spreadables
 from store import Store
 from models import Product
-from efforia.payments import Baskets
+from feedly.payments import Baskets
+from feedly.core import Feedly,user
+
+def start(request):
+    e = Feedly()
+    if request.method == 'GET':
+        return e.start(request)
 
 def spread_basket(request):
     b = Baskets(Product())
@@ -41,7 +47,7 @@ def spreadable(request):
     s = Spreadables()
     if request.method == 'GET':
         return s.view_spreadable(request)
-    
+
 def playable(request):
     s = Spreadables()
     if request.method == 'GET':
@@ -58,7 +64,7 @@ def image(request):
         return i.view_image(request)
     elif request.method == 'POST':
         return i.create_image(request)
-    
+
 def upload(request):
     u = Uploads()
     if request.method == 'GET':
@@ -69,15 +75,15 @@ def upload(request):
 def init_spread(request):
     spread = Spreads()
     if request.method == 'GET':
-        return spread.start_spreadapp(request)    
+        return spread.start_spreadapp(request)
 
 def main(request):
     graph = Spreads()
-    if request.method == 'GET': 
+    if request.method == 'GET':
         return graph.view_spread(request)
-    elif request.method == 'POST': 
+    elif request.method == 'POST':
         return graph.create_spread(request)
-    
+
 def content(request):
     upload = Uploads()
     if request.method == 'GET':

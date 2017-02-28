@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse as response
 
 from models import Spreadable,Image,Playable,Spreaded
-from efforia.main import Efforia
+from plethora.app import Plethora
 
-class Spreadables(Efforia):
+class Spreadables(Plethora):
     def __init__(self): pass
     def view_spreadable(self,request):
         spread_id = int(request.GET['id'])
