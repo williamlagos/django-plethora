@@ -125,6 +125,7 @@ DATABASES = {
 }
 
 #EFFORIA_APPS = ('spread','promote')
+EFFORIA_ACTIONS = {'plethora':[]}
 EFFORIA_APPS = ('plethora',)
 EFFORIA_OBJS.update({
     'plethora':  ['Playable','Spreadable','Image','Product'],
