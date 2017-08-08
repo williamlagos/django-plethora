@@ -1,4 +1,4 @@
-Plethora Content Engine
+Genese Content Engine
 -----------------------
 
-Plethora is a small framework for building content-enabled websites with Django.
+Genese is a small framework for building content-enabled websites with Django.
