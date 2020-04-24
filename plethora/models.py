@@ -1,4 +1,4 @@
-from django.db.models import ForeignKey,TextField,CharField,IntegerField,DateTimeField,BooleanField,Model,FloatField
+from django.db.models import ForeignKey,TextField,CharField,IntegerField,DateTimeField,BooleanField,Model,FloatField, CASCADE
 from django.contrib.auth.models import User
 from feedly.models import Sellable
 from datetime import date
@@ -10,7 +10,7 @@ locale = ('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez
 
 class Spreaded(Model):
     name = CharField(default='!!',max_length=10)
-    user = ForeignKey(User,related_name='+')
+    user = ForeignKey(User,related_name='+', on_delete=CASCADE)
     spread = IntegerField(default=1)
     spreaded = IntegerField(default=2)
     date = DateTimeField(auto_now_add=True)
@@ -20,7 +20,7 @@ class Spreaded(Model):
 
 class Spreadable(Model):
     name = CharField(default='',max_length=50)
-    user = ForeignKey(User,related_name='+')
+    user = ForeignKey(User,related_name='+', on_delete=CASCADE)
     content = TextField()
     spreaded = CharField(default='efforia',max_length=15)
     date = DateTimeField(auto_now_add=True)
@@ -30,7 +30,7 @@ class Spreadable(Model):
 
 class Playable(Model):
     name = CharField(default='',max_length=150)
-    user = ForeignKey(User,related_name='+')
+    user = ForeignKey(User,related_name='+', on_delete=CASCADE)
     category = IntegerField(default=1)
     description = TextField()
     token = CharField(max_length=20)
@@ -46,7 +46,7 @@ class Image(Model):
     name = CharField(default='!%',max_length=10)
     description = CharField(default='',max_length=140)
     link = CharField(default='',max_length=100)
-    user = ForeignKey(User,related_name='+')
+    user = ForeignKey(User,related_name='+', on_delete=CASCADE)
     date = DateTimeField(auto_now_add=True)
     def token(self): return self.name[:2]
     def name_trimmed(self): return self.name[2:]
