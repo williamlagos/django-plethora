@@ -12,7 +12,7 @@ pypugjs==4.2.0
 BeautifulSoup==3.2.1
 argparse==1.2.1
 gdata==2.0.16
-gunicorn==0.13.4
+gunicorn==19.5.0
 httplib2==0.9.1
 oauth==1.0.1
 oauth2==1.5.211
