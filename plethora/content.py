@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse as response
 
-from models import Spreadable,Image,Playable,Spreaded
+from .models import Spreadable,Image,Playable,Spreaded
 from plethora.app import Plethora
 
 class Spreadables(Plethora):

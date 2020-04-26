@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from app import Images,Spreads,Uploads
-from content import Spreadables
-from store import Store
-from models import Product
+from .app import Images,Spreads,Uploads
+from .content import Spreadables
+from .store import Store
+from .models import Product
 from feedly.payments import Baskets
 from feedly.core import Feedly,user
 
@@ -15,9 +15,9 @@ def start(request):
 def spread_basket(request):
     b = Baskets(Product())
     if request.method == 'GET':
-	return b.view_items(request)
+        return b.view_items(request)
     elif request.method == 'POST':
-	return b.add_item(request)
+        return b.add_item(request)
 
 def product_image(request):
     s = Store()

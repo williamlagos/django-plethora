@@ -118,7 +118,7 @@ class SpreadBasket(Basket):
 	# for p in basket:
         # quantity += p.quantity
         # value += p.product.credit*p.quantity
-	pass
+        pass
 
 class Store(Plethora):
     def __init__(self): pass
