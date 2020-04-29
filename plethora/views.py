@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from .app import Images,Spreads,Uploads
 from .content import Spreadables
-from .store import Store
+from .store import Store, Cancel
 from .models import Product
 from feedly.payments import Baskets
 from feedly.core import Feedly,user

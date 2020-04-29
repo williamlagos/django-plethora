@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'socialize',
     'shipping',
     'feedly',
+    'django_distill',
 ]
 
 LOGGING = {

@@ -65,10 +65,14 @@ urlpatterns = [
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
+from django_distill import distill_url
+
 admin.autodiscover()
 
+def getNone(): return None
+
 urlpatterns += [
-    url(r'^$', start),
+    distill_url(r'^$', start, name='home', distill_func=getNone),
     url(r'^socialize/',include('socialize.urls')),
     url(r'^shipping/',include('shipping.urls')),
     url(r'^feedly/',include('feedly.urls')),
