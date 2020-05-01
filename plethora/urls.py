@@ -3,8 +3,6 @@ from .views import *
 
 urlpatterns = [
     url(r'^$', init_spread),
-    url(r'^products', store_main),
-    url(r'^cancel', cancel),
     url(r'^spreadable', spreadable),
     url(r'^spreaded', spreaded),
     url(r'^spreadspread', spreadspread),
@@ -15,5 +13,4 @@ urlpatterns = [
     url(r'^contents', content),
     url(r'^expose', upload),
     url(r'^media', media),
-    url(r'^productimage', product_image)
 ]
