@@ -1,4 +1,25 @@
+#!/usr/bin/python
+#
+# This file is part of django-plethora project.
+#
+# Copyright (C) 2011-2020 William Oliveira de Lagos <william.lagos@icloud.com>
+#
+# Plethora is free software: you can redistribute it and/or modify
+# it under the terms of the Lesser GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Plethora is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with Plethora. If not, see <http://www.gnu.org/licenses/>.
+#
+
 import re
+
 from unicodedata import normalize
 from datetime import datetime
 from django.shortcuts import render
@@ -6,10 +27,7 @@ from django.http import HttpResponse as response
 from django.http import HttpResponseRedirect as redirect
 from django.conf import settings
 
-from .models import Spreadable,Image,Playable,Spreaded,Product
-from socialize.models import Profile
-from socialize.stream import Dropbox,StreamService
-from feedly.feed import Activity,Mosaic
+from .models import Spreadable,Image,Playable,Spreaded,Profile
 
 def sp(x): return '!!' in x[1]
 def pl(x): return '>!' in x[1]

@@ -1,12 +1,32 @@
-from django.db.models import ForeignKey,TextField,CharField,IntegerField,DateTimeField,BooleanField,Model,FloatField, CASCADE
-from django.contrib.auth.models import User
-from feedly.models import Sellable
-from datetime import date
+#!/usr/bin/python
+#
+# This file is part of django-plethora project.
+#
+# Copyright (C) 2011-2020 William Oliveira de Lagos <william.lagos@icloud.com>
+#
+# Plethora is free software: you can redistribute it and/or modify
+# it under the terms of the Lesser GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Plethora is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with Plethora. If not, see <http://www.gnu.org/licenses/>.
+#
+
 import sys,os
-path = os.path.abspath("efforia")
-sys.path.append(path)
+
+from datetime import date
+from django.db.models import ForeignKey,TextField,CharField,IntegerField,DateTimeField,BooleanField,Model,FloatField,CASCADE
+from django.contrib.auth.models import User
 
 locale = ('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')
+path = os.path.abspath("efforia")
+sys.path.append(path)
 
 class Spreaded(Model):
     name = CharField(default='!!',max_length=10)
@@ -56,10 +76,3 @@ class Image(Model):
         response = client.fetch(self.visual)
         url = '%s?dl=1' % response.effective_url
         return url
-
-class Product(Sellable):
-    category = IntegerField(default=1)
-    description = TextField()
-    def token(self): return self.name[:3]
-    def name_trimmed(self): return self.name.split(';')[0][2:]
-    def month(self): return locale[self.date.month-1]
