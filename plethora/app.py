@@ -27,13 +27,13 @@ from django.http import HttpResponse as response
 from django.http import HttpResponseRedirect as redirect
 from django.conf import settings
 
-from .models import Spreadable,Image,Playable,Spreaded,Profile
+from .models import Spreadable,Image,Playable,Spreaded#,Profile
 
 def sp(x): return '!!' in x[1]
 def pl(x): return '>!' in x[1]
 def im(x): return '%!' in x[1]
 
-class Plethora(Mosaic):
+class Plethora():#(Mosaic):
     def __init__(self): pass
     def start(self,request):
         if 'user' in request.session:
@@ -148,7 +148,7 @@ class Plethora(Mosaic):
         }
         return access
 
-class Application(Activity):
+class Application():#(Activity):
     def __init__(self,user,app):
         Activity.__init__(self,user,app)
     def deadline(self):

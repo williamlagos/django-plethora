@@ -20,7 +20,7 @@
 
 from .app import Images,Spreads,Uploads
 from .content import Spreadables
-from .models import Product
+# from .models import Product
 
 def start(request):
     e = Feedly()
