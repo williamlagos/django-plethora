@@ -22,6 +22,13 @@ from .app import Images,Spreads,Uploads
 from .content import Spreadables
 # from .models import Product
 
+from django.views import View
+from django.http import JsonResponse
+
+class ContentsView(View):
+    def get(self, request):
+        return JsonResponse({'contents': 'success'})
+
 def start(request):
     e = Feedly()
     if request.method == 'GET':

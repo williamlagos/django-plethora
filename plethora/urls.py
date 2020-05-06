@@ -19,10 +19,12 @@
 #
 
 from django.conf.urls import url,include
+from django.urls import path
 
 from .views import *
 
 urlpatterns = [
+    path('spreadables/', ContentsView.as_view()),
     url(r'^$', init_spread),
     url(r'^spreadable', spreadable),
     url(r'^spreaded', spreaded),
