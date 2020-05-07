@@ -23,9 +23,13 @@ from django.urls import path
 
 from .views import *
 
+contents_patterns = ([
+    path('', ContentsView.as_view())
+], 'contents')
+
 urlpatterns = [
-    path('spreadables/', ContentsView.as_view()),
-    url(r'^$', init_spread),
+    path('contents', include(contents_patterns)),
+    # url(r'^$', init_spread),
     url(r'^spreadable', spreadable),
     url(r'^spreaded', spreaded),
     url(r'^spreadspread', spreadspread),
