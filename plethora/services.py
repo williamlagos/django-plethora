@@ -26,6 +26,8 @@ from .models import Spreadable,Image,Playable,Spreaded
 
 class ContentService:
 
+    model = Spreadable
+
     def __init__(self): 
         pass
 
