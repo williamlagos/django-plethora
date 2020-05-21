@@ -23,6 +23,7 @@ import sys,os
 from datetime import date
 from django.db.models import ForeignKey,TextField,CharField,IntegerField,DateTimeField,BooleanField,Model,FloatField,CASCADE
 from django.contrib.auth.models import User
+from django.db.models import ImageField
 
 locale = ('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez')
 path = os.path.abspath("efforia")
@@ -76,3 +77,10 @@ class Image(Model):
         response = client.fetch(self.visual)
         url = '%s?dl=1' % response.effective_url
         return url
+
+class Showable(Model):
+    name = CharField(default='!%',max_length=10)
+    description = CharField(default='',max_length=140)
+    image = ImageField()
+    user = ForeignKey(User,related_name='+', on_delete=CASCADE)
+    date = DateTimeField(auto_now_add=True)
