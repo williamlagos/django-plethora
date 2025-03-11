@@ -25,13 +25,14 @@ from django.http import HttpResponse as response
 from django.http import HttpResponseRedirect as redirect
 from django.conf import settings
 
+
 class DropboxExternalProvider:
 
-    def __init__(self): 
+    def __init__(self):
         pass
 
     def view_image(self, request):
-        return render(request,'image.pug',{'static_url':settings.STATIC_URL},content_type='text/html')
+        return render(request, 'image.pug', {'static_url': settings.STATIC_URL}, content_type='text/html')
 
     def upload_image(self, request):
         photo = request.FILES['Filedata'].read()
@@ -49,6 +50,12 @@ class DropboxExternalProvider:
             image.description = descr
             image.save()
             return response('Description added to image successfully')
-        i = Image(link=self.upload_image(request),user=u)
+        i = Image(link=self.upload_image(request), user=u)
         i.save()
         return response('Image created successfully')
+
+    def url_request(url, data=None, headers=None):
+        """Send a request"""
+        request = urllib.request.Request(url=url, data=data, headers=headers)
+        request_open = urllib.request.urlopen(request)
+        return request_open.geturl()
